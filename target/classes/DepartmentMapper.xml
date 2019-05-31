@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<mapper namespace="mybatisDemo.dao.DepartmentMapper">
+    <select id="getDeptById" resultType="batisDemo.bean.Department">
+        select id,dept_name department_name from t_dept where id=#{id}
+    </select>
+
+    <select id="getDeptByIdStep" resultMap="dstep">
+        select id,dept_name from t_dept where id = #{id}
+    </select>
+</mapper>
