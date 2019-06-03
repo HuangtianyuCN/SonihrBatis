@@ -3,16 +3,19 @@ package com.sonihr.batis.session.defaults;/*
 @date 2019/5/31 - 14:25
 **/
 
+import com.sonihr.batis.datasource.DefaultDataSourceFactory;
 import com.sonihr.batis.session.Configuration;
 import com.sonihr.batis.session.SqlSession;
 import com.sonihr.batis.session.SqlSessionFactory;
 import lombok.Data;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Data
 public class DefaultSqlSessionFactory implements SqlSessionFactory {
     private Configuration configuration;
+
 
     public DefaultSqlSessionFactory() throws ClassNotFoundException {
         this.configuration = new Configuration();

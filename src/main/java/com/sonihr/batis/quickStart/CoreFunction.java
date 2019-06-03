@@ -122,7 +122,7 @@ public class CoreFunction {
                             }
                         }
                         BeanUtils.populate(resBean,map);
-                        return resultClazz.cast(resBean);
+                        return resBean;
                     }
                 });
         Department department = ((DepartmentMapper) proxy).getDeptById(1);

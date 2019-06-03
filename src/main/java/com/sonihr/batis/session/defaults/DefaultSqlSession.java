@@ -3,22 +3,23 @@ package com.sonihr.batis.session.defaults;/*
 @date 2019/5/31 - 14:33
 **/
 
-import com.sonihr.batis.quickStart.DataBase;
+import com.sonihr.batis.datasource.DefaultDataSourceFactory;
 import com.sonihr.batis.session.Configuration;
 import com.sonihr.batis.session.SqlSession;
 import lombok.Data;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 @Data
 public class DefaultSqlSession implements SqlSession {
-    Configuration configuration;
-    Connection connection;
+    private Configuration configuration;
+    private DataSource dataSource;
 
     public DefaultSqlSession(Configuration configuration) throws SQLException {
         this.configuration = configuration;
-        this.connection = DataBase.GetInstance().getConnection();
+        this.dataSource = new DefaultDataSourceFactory().getDataSource(configuration.getDataSourceName());
     }
 
     public DefaultSqlSession() throws SQLException {
@@ -30,8 +31,8 @@ public class DefaultSqlSession implements SqlSession {
     }
 
     @Override
-    public Connection getConnection() {
-        return connection;
+    public Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
 
     @Override

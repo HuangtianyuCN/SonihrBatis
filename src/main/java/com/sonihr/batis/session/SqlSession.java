@@ -5,6 +5,7 @@ package com.sonihr.batis.session;/*
 
 import java.io.Closeable;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Closeable接口和try-with-resource结构相关。
@@ -15,6 +16,6 @@ import java.sql.Connection;
  * */
 public interface SqlSession extends Closeable {
     <T> T getMapper(Class<T> interfaceClass);
-    Connection getConnection();
+    Connection getConnection() throws SQLException;
     void close();
 }
