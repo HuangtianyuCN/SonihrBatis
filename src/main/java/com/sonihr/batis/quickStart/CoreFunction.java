@@ -92,6 +92,7 @@ public class CoreFunction {
         //sqlSession
         DataSource dataSource = DataBase.GetInstance();
         Connection sqlSession = dataSource.getConnection();
+        Statement statement = sqlSession.createStatement();
         //executor
         Class interfaceMapper = Class.forName(className);
         Class resultClazz = Class.forName(resultType);
@@ -105,7 +106,7 @@ public class CoreFunction {
                         ps.setInt(1, (Integer) args[0]);
                         ResultSet rs = ps.executeQuery();
                         ResultSetMetaData rsmd = rs.getMetaData();
-                        Object resBean = resultClazz.newInstance();
+                        Object resBean = method.getReturnType().newInstance();
                         Field[] fields = resultClazz.getDeclaredFields();
                         Map<String,Object> map = new HashMap<>();
                         while (rs.next()){

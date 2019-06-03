@@ -5,6 +5,12 @@ package com.sonihr.batis.session;/*
 
 
 import com.sonihr.batis.binding.MapperRegistry;
+import com.sonihr.batis.executor.parameter.DefaultParameterHandler;
+import com.sonihr.batis.executor.parameter.ParameterHandler;
+import com.sonihr.batis.executor.resultset.DefaultResultHandler;
+import com.sonihr.batis.executor.resultset.ResultSetHandler;
+import com.sonihr.batis.executor.statement.RoutingStatementHandler;
+import com.sonihr.batis.executor.statement.StatementHandler;
 import lombok.Data;
 
 
@@ -20,7 +26,7 @@ public class Configuration {
 
     public Configuration() throws ClassNotFoundException {
         mapperInterfaceName = "batisDemo.dao.DepartmentMapper";
-        sql = "select id,dept_name departmentName from t_dept where id = ?";
+        sql = "select id,dept_name departmentName from t_dept where id = ${id}";
         resultType = "batisDemo.bean.Department";
         mapperInterface = Class.forName(mapperInterfaceName);
         resultClass = Class.forName(resultType);
@@ -32,5 +38,18 @@ public class Configuration {
         return this.mapperRegistry.getMapper(type, sqlSession);
     }
 
+    public StatementHandler newStatementHandler(Object[] args){
+        StatementHandler statementHandler =  new RoutingStatementHandler(this,args);
+        return statementHandler;
+    }
 
+    public ParameterHandler newParameterHandler(Object[] args){
+        ParameterHandler parameterHandler =  new DefaultParameterHandler(this,args);
+        return parameterHandler;
+    }
+
+    public ResultSetHandler newResultHandler(){
+        ResultSetHandler resultSetHandler =  new DefaultResultHandler(this);
+        return resultSetHandler;
+    }
 }

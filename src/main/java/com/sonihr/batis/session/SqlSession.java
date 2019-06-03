@@ -17,5 +17,6 @@ import java.sql.SQLException;
 public interface SqlSession extends Closeable {
     <T> T getMapper(Class<T> interfaceClass);
     Connection getConnection() throws SQLException;
+    <T> T selectOne(Object[] args) throws Exception;
     void close();
 }
